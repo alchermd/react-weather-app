@@ -24,7 +24,7 @@ class App extends React.Component {
       <div>
         <h1>Weather App</h1>
         <hr/>
-        <WeatherDisplay weather={weather}/>
+        <WeatherDisplay weather={weather} tempUnit={tempUnit}/>
         <ToggleButton tempUnit={tempUnit}/>
       </div>
     )
