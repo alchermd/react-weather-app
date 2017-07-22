@@ -17,6 +17,22 @@ class App extends React.Component {
     // method bindings
     this.toggleUnit = this.toggleUnit.bind(this)
     this.convert = this.convert.bind(this)
+    this.fetchWeather = this.fetchWeather.bind(this)
+  }
+
+  componentDidMount() {
+     if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(({coords}) => {
+        this.fetchWeather(coords.latitude, coords.longitude)
+      })
+    }
+  }
+
+  fetchWeather(lat, long) {
+    const APIkey = "d59d2aa357c3cd8a0cc48a9b48d95b6e"
+    let APIEndPoint = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${APIkey}`
+   
+    console.log(APIEndPoint)
   }
 
   toggleUnit() {
@@ -28,7 +44,7 @@ class App extends React.Component {
   }
 
   convert(tempUnit, temperature) {
-    if (tempUnit == "C")
+    if (tempUnit === "C")
       return Number((temperature * (9/5) + 32).toFixed(2))
     else
       return Number(((temperature - 32) * (5/9)).toFixed(2))
