@@ -18,12 +18,14 @@ class App extends React.Component {
 
 
   render() {
+    const {weather, tempUnit} = this.state
+
     return (
       <div>
         <h1>Weather App</h1>
         <hr/>
-        <WeatherDisplay weather={this.state.weather}/>
-        <ToggleButton tempUnit={this.state.tempUnit}/>
+        <WeatherDisplay weather={weather}/>
+        <ToggleButton tempUnit={tempUnit}/>
       </div>
     )
   }
