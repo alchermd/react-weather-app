@@ -1,8 +1,8 @@
 import React from 'react'
 
-const ToggleButton = ({tempUnit}) =>
+const ToggleButton = ({tempUnit, toggleUnit}) =>
     (<div>
-        <button>{tempUnit === "C" ? "F" : "C"}</button>
+        <button onClick={() => toggleUnit()}>{tempUnit === "C" ? "F" : "C"}</button>
     </div>)
 
 export default ToggleButton
