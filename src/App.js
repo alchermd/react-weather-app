@@ -1,5 +1,6 @@
 import React from 'react'
 import WeatherDisplay from './WeatherDisplay'
+import ToggleButton from './ToggleButton'
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class App extends React.Component {
         <h1>Weather App</h1>
         <hr/>
         <WeatherDisplay weather={this.state.weather}/>
+        <ToggleButton tempUnit={this.state.tempUnit}/>
       </div>
     )
   }
