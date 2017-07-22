@@ -13,8 +13,15 @@ class App extends React.Component {
         description: "Light Rain"
       }
     }
+
+    // method bindings
+    this.toggleUnit = this.toggleUnit.bind(this)
   }
 
+  toggleUnit() {
+    this.setState(({tempUnit}) => 
+      ({tempUnit: tempUnit === "C" ? "F" : "C"}))
+  }
 
 
   render() {
@@ -25,7 +32,7 @@ class App extends React.Component {
         <h1>Weather App</h1>
         <hr/>
         <WeatherDisplay weather={weather} tempUnit={tempUnit}/>
-        <ToggleButton tempUnit={tempUnit}/>
+        <ToggleButton tempUnit={tempUnit} toggleUnit={this.toggleUnit}/>
       </div>
     )
   }
