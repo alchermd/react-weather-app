@@ -7,7 +7,11 @@ class App extends React.Component {
     super(props)
     this.state = {
       tempUnit: "C",
-      weather: undefined
+      weather: {
+        location: "loading...", 
+        temperature:0, 
+        description:"analyzing", 
+      }
     }
 
     // method bindings
