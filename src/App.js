@@ -7,11 +7,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       tempUnit: "C",
-      weather: {
-        location: "Malolos",
-        temperature: 24.5,
-        description: "Light Rain"
-      }
+      weather: undefined
     }
 
     // method bindings
@@ -20,6 +16,9 @@ class App extends React.Component {
     this.fetchWeather = this.fetchWeather.bind(this)
   }
 
+  /**
+   * Get user location on startup.
+   */
   componentDidMount() {
      if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(({coords}) => {
@@ -28,11 +27,28 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * use `fetch` to connect to OpenWeather's API and 
+   * update the App state with the results
+   * 
+   * @param {user's latitude} lat 
+   * @param {user's longitude} long 
+   */
   fetchWeather(lat, long) {
     const APIkey = "d59d2aa357c3cd8a0cc48a9b48d95b6e"
     let APIEndPoint = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${APIkey}`
-   
-    console.log(APIEndPoint)
+
+    fetch(APIEndPoint)
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({
+          weather: {
+            location: json.name,
+            temperature: this.convert("K", json.main.temp),
+            description: json.weather[0].description
+          }
+        })
+      })
   }
 
   toggleUnit() {
@@ -43,11 +59,22 @@ class App extends React.Component {
       }))
   }
 
+  /**
+   * Converts the temperature according to the app's needs.
+   * 
+   * @param {Unit of temperature (ex: "F")} tempUnit 
+   * @param {The actual value of the temperature} temperature 
+   */
   convert(tempUnit, temperature) {
+    // Temperature is in Farenheit, convert to Celsius
     if (tempUnit === "C")
       return Number((temperature * (9/5) + 32).toFixed(2))
-    else
+    // Temperature is in Celsius, convert to Farenheit
+    else if (tempUnit === "F")
       return Number(((temperature - 32) * (5/9)).toFixed(2))
+    // Temperature is in Kelvin, convert to Celsius
+    else if (tempUnit === "K")
+      return Number((temperature - 273.15).toFixed(2))
   }
 
 
