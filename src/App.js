@@ -16,11 +16,22 @@ class App extends React.Component {
 
     // method bindings
     this.toggleUnit = this.toggleUnit.bind(this)
+    this.convert = this.convert.bind(this)
   }
 
   toggleUnit() {
-    this.setState(({tempUnit}) => 
-      ({tempUnit: tempUnit === "C" ? "F" : "C"}))
+    this.setState(({tempUnit, weather}) => 
+      ({
+        tempUnit: tempUnit === "C" ? "F" : "C",
+        weather: {...weather, temperature: this.convert(tempUnit, weather.temperature)}
+      }))
+  }
+
+  convert(tempUnit, temperature) {
+    if (tempUnit == "C")
+      return Number((temperature * (9/5) + 32).toFixed(2))
+    else
+      return Number(((temperature - 32) * (5/9)).toFixed(2))
   }
 
 
