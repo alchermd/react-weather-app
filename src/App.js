@@ -88,8 +88,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>Weather App</h1>
-        <WeatherDisplay weather={weather} tempUnit={tempUnit}/>
-        <ToggleButton tempUnit={tempUnit} toggleUnit={this.toggleUnit}/>
+        <div className="SubComponents">
+          <WeatherDisplay weather={weather} tempUnit={tempUnit}/>
+          <ToggleButton tempUnit={tempUnit} toggleUnit={this.toggleUnit}/>
+        </div>
       </div>
     )
   }
