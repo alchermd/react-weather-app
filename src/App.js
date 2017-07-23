@@ -86,9 +86,8 @@ class App extends React.Component {
     const {weather, tempUnit} = this.state
 
     return (
-      <div>
+      <div className="App">
         <h1>Weather App</h1>
-        <hr/>
         <WeatherDisplay weather={weather} tempUnit={tempUnit}/>
         <ToggleButton tempUnit={tempUnit} toggleUnit={this.toggleUnit}/>
       </div>
