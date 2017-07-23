@@ -5,7 +5,7 @@ const WeatherDisplay =
         (<div>
             <h2>{weather.location}</h2>
             <h3>{weather.temperature.toFixed(2)} &deg; {tempUnit}</h3>
-            <p>{weather.description}</p>
+            <p><em>{weather.description}</em></p>
         </div>)
 
 export default WeatherDisplay
