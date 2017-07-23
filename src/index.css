@@ -1,7 +1,33 @@
-body { 
-  background: url(images/background-image.jpeg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-size: 16px;
+}
+body {
+    background: url(images/background-image.jpeg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* flex options */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.App {
+    min-height: 200px;
+    min-width: 400px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.App *:not(i) {
+    text-align: center;
+    color: #fff;
+    font-weight: bolder;
+    letter-spacing: 2px;
+    font-family: "Open Sans", sans-serif;
 }
