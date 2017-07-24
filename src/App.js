@@ -1,4 +1,5 @@
 import React from 'react'
+import FrontDisplay from './FrontDisplay'
 import WeatherDisplay from './WeatherDisplay'
 import ToggleButton from './ToggleButton'
 
@@ -10,7 +11,8 @@ class App extends React.Component {
       weather: {
         location: "loading...", 
         temperature:0, 
-        description:"analyzing", 
+        description:"analyzing",
+        reportRequested: false 
       }
     }
 
@@ -18,17 +20,21 @@ class App extends React.Component {
     this.toggleUnit = this.toggleUnit.bind(this)
     this.convert = this.convert.bind(this)
     this.fetchWeather = this.fetchWeather.bind(this)
+    this.requestReport = this.requestReport.bind(this)
+    this.getLatLong = this.getLatLong.bind(this)
   }
 
   /**
-   * Get user location on startup.
+   * Get user location through geolocation.
    */
-  componentDidMount() {
-     if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(({coords}) => {
-        this.fetchWeather(coords.latitude, coords.longitude)
-      })
-    }
+  getLatLong() {
+    return new Promise((resolve, reject) => {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(({coords}) => {
+          resolve({lat: coords.latitude, long: coords.longitude})
+        })
+      }
+    })
   }
 
   /**
@@ -55,6 +61,9 @@ class App extends React.Component {
       })
   }
 
+  /**
+   * Flips the current weather state to either Celsius or Farenheit.
+   */
   toggleUnit() {
     this.setState(({tempUnit, weather}) => 
       ({
@@ -81,16 +90,28 @@ class App extends React.Component {
       return Number((temperature - 273.15).toFixed(2))
   }
 
+  requestReport() {
+    this.setState({reportRequested: true})
+    this.getLatLong()
+      .then(({lat, long}) => this.fetchWeather(lat, long))
+  }
+
 
   render() {
-    const {weather, tempUnit} = this.state
+    const {weather, tempUnit, reportRequested} = this.state
 
     return (
       <div className="App">
         <h1>Weather App</h1>
         <div className="SubComponents">
-          <WeatherDisplay weather={weather} tempUnit={tempUnit}/>
-          <ToggleButton tempUnit={tempUnit} toggleUnit={this.toggleUnit}/>
+          {
+            reportRequested ? 
+            (<div>
+            <WeatherDisplay weather={weather} tempUnit={tempUnit}/>
+            <ToggleButton tempUnit={tempUnit} toggleUnit={this.toggleUnit}/>
+            </div>):
+            <FrontDisplay requestReport={this.requestReport} />
+          }
         </div>
       </div>
     )
