@@ -41,8 +41,8 @@ class App extends React.Component {
    * use `fetch` to connect to OpenWeather's API and 
    * update the App state with the results
    * 
-   * @param {user's latitude} lat 
-   * @param {user's longitude} long 
+   * @param {number} lat - user's latitude
+   * @param {number} long - user's longitude
    */
   fetchWeather(lat, long) {
     const APIkey = "d59d2aa357c3cd8a0cc48a9b48d95b6e"
@@ -77,8 +77,8 @@ class App extends React.Component {
   /**
    * Converts the temperature according to the app's needs.
    * 
-   * @param {Unit of temperature (ex: "F")} tempUnit 
-   * @param {The actual value of the temperature} temperature 
+   * @param {string} tempUnit - Unit of temperature (ex: "F")
+   * @param {number} temperature -The actual value of the temperature
    */
   convert(tempUnit, temperature) {
     // Temperature is in Farenheit, convert to Celsius
