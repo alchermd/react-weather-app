@@ -46,9 +46,11 @@ class App extends React.Component {
    */
   fetchWeather(lat, long) {
     const APIkey = "d59d2aa357c3cd8a0cc48a9b48d95b6e"
-    let APIEndPoint = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${APIkey}`
+    const CORSAPILink = "https://cors-anywhere.herokuapp.com/"
+    const openWeatherEndpoint = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${APIkey}`
+    const APIEndpoint = `${CORSAPILink}${openWeatherEndpoint}`
 
-    fetch(APIEndPoint)
+    fetch(APIEndpoint)
       .then(resp => resp.json())
       .then(json => {
         this.setState({
